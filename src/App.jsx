@@ -1,9 +1,9 @@
-import { Content } from "./Content";
+import { Subclip } from "./Subclip";
 
 function App() {
   return (
     <div>
-      <Content />
+      <Subclip />
     </div>
   );
 }
