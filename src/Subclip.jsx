@@ -6,6 +6,7 @@ export function Subclip() {
   const [startTime, setStartTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [showDoneMessage, setShowDoneMessage] = useState(false);
 
   const handleFileChange = (e) => {
     setvideoFile(e.target.files[0]);
@@ -29,6 +30,10 @@ export function Subclip() {
       });
 
       console.log(response.data);
+      setShowDoneMessage(true);
+      setTimeout(() => {
+        setShowDoneMessage(false);
+      }, 3000);
     } catch (error) {
       console.error(error.response.data);
     } finally {
@@ -58,6 +63,7 @@ export function Subclip() {
         <button type="submit" className="animate-bounce ml-4" disabled={loading}>
           {loading ? "Loading..." : "Create Subclip"}
         </button>
+        {showDoneMessage && <div className="text-green-600 ml-10">Done!</div>}
       </form>
     </div>
   );
