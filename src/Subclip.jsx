@@ -5,6 +5,7 @@ export function Subclip() {
   const [videoFile, setvideoFile] = useState(null);
   const [startTime, setStartTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const handleFileChange = (e) => {
     setvideoFile(e.target.files[0]);
@@ -12,6 +13,8 @@ export function Subclip() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setLoading(true);
 
     const formData = new FormData();
     formData.append("video", videoFile);
@@ -28,27 +31,33 @@ export function Subclip() {
       console.log(response.data);
     } catch (error) {
       console.error(error.response.data);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div>
-      <h2>Subclip Video</h2>
-      <form onSubmit={handleSubmit}>
-        <input type="file" accept="video/*" onChange={handleFileChange} />
+    <div className="flex flex-wrap justify-center font-mono">
+      <h1 className="basis-full text-2xl mt-3 ml-1">Video Subclip</h1>
+      <form onSubmit={handleSubmit} className="basis-full space-y-5">
+        <input className="ml-1" type="file" accept="video/*" onChange={handleFileChange} />
         <input
+          className="rounded-md border-2"
           type="number"
           placeholder="Start Time (seconds)"
           value={startTime}
           onChange={(e) => setStartTime(e.target.value)}
         />
         <input
+          className="rounded-md border-2 ml-1"
           type="number"
           placeholder="End Time (seconds)"
           value={endTime}
           onChange={(e) => setEndTime(e.target.value)}
         />
-        <button type="submit">Create Subclip</button>
+        <button type="submit" className="animate-bounce ml-4" disabled={loading}>
+          {loading ? "Loading..." : "Create Subclip"}
+        </button>
       </form>
     </div>
   );
