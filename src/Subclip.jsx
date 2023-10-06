@@ -5,6 +5,7 @@ export function Subclip() {
   const [videoFile, setvideoFile] = useState(null);
   const [startTime, setStartTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
+  const [fileName, setFileName] = useState("");
   const [loading, setLoading] = useState(false);
   const [showDoneMessage, setShowDoneMessage] = useState(false);
 
@@ -21,6 +22,7 @@ export function Subclip() {
     formData.append("video", videoFile);
     formData.append("start_time", startTime);
     formData.append("end_time", endTime);
+    formData.append("file_name", fileName);
 
     try {
       const response = await axios.post("http://localhost:5000/subclip", formData, {
@@ -59,6 +61,13 @@ export function Subclip() {
           placeholder="End Time (seconds)"
           value={endTime}
           onChange={(e) => setEndTime(e.target.value)}
+        />
+        <input
+          className="rounded-md border-2 ml-1"
+          type="text"
+          placeholder="Enter a name"
+          value={fileName}
+          onChange={(e) => setFileName(e.target.value)}
         />
         <button type="submit" className="animate-bounce ml-4" disabled={loading}>
           {loading ? "Loading..." : "Create Subclip"}
