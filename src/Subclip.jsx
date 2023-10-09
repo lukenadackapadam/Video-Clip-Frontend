@@ -1,16 +1,22 @@
 import { useState } from "react";
 import axios from "axios";
+import { Button } from "flowbite-react";
 
 export function Subclip() {
-  const [videoFile, setvideoFile] = useState(null);
-  const [startTime, setStartTime] = useState(0);
-  const [endTime, setEndTime] = useState(0);
-  const [fileName, setFileName] = useState("");
+  const initialVideoFile = null;
+  const initialStartTime = 0;
+  const initialEndTime = 0;
+  const initialFileName = "";
+
+  const [videoFile, setVideoFile] = useState(initialVideoFile);
+  const [startTime, setStartTime] = useState(initialStartTime);
+  const [endTime, setEndTime] = useState(initialEndTime);
+  const [fileName, setFileName] = useState(initialFileName);
   const [loading, setLoading] = useState(false);
   const [showDoneMessage, setShowDoneMessage] = useState(false);
 
   const handleFileChange = (e) => {
-    setvideoFile(e.target.files[0]);
+    setVideoFile(e.target.files[0]);
   };
 
   const handleSubmit = async (e) => {
@@ -35,6 +41,10 @@ export function Subclip() {
       setShowDoneMessage(true);
       setTimeout(() => {
         setShowDoneMessage(false);
+        setVideoFile(initialVideoFile);
+        setStartTime(initialStartTime);
+        setEndTime(initialEndTime);
+        setFileName(initialFileName);
       }, 3000);
     } catch (error) {
       console.error(error.response.data);
@@ -69,10 +79,10 @@ export function Subclip() {
           value={fileName}
           onChange={(e) => setFileName(e.target.value)}
         />
-        <button type="submit" className="animate-bounce ml-4" disabled={loading}>
+        <Button color="blue" type="submit" className="ml-1" disabled={loading}>
           {loading ? "Loading..." : "Create Subclip"}
-        </button>
-        {showDoneMessage && <div className="text-green-600 ml-10">Done!</div>}
+        </Button>
+        {showDoneMessage && <div className="text-green-600 text-center">Done!</div>}
       </form>
     </div>
   );
