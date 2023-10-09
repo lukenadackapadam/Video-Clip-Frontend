@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 import { Button } from "flowbite-react";
 
@@ -14,6 +14,8 @@ export function Subclip() {
   const [fileName, setFileName] = useState(initialFileName);
   const [loading, setLoading] = useState(false);
   const [showDoneMessage, setShowDoneMessage] = useState(false);
+
+  const fileInputRef = useRef(null);
 
   const handleFileChange = (e) => {
     setVideoFile(e.target.files[0]);
@@ -45,6 +47,9 @@ export function Subclip() {
         setStartTime(initialStartTime);
         setEndTime(initialEndTime);
         setFileName(initialFileName);
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
       }, 3000);
     } catch (error) {
       console.error(error.response.data);
@@ -57,7 +62,7 @@ export function Subclip() {
     <div className="flex flex-wrap justify-center font-mono">
       <h1 className="basis-full text-2xl mt-3 ml-1">Video Subclip</h1>
       <form onSubmit={handleSubmit} className="basis-full space-y-5">
-        <input className="ml-1" type="file" accept="video/*" onChange={handleFileChange} />
+        <input ref={fileInputRef} className="ml-1" type="file" accept="video/*" onChange={handleFileChange} />
         <input
           className="rounded-md border-2"
           type="number"
