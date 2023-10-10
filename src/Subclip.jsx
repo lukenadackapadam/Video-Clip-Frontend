@@ -14,6 +14,7 @@ export function Subclip() {
   const [fileName, setFileName] = useState(initialFileName);
   const [loading, setLoading] = useState(false);
   const [showDoneMessage, setShowDoneMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const fileInputRef = useRef(null);
 
@@ -40,21 +41,22 @@ export function Subclip() {
       });
 
       console.log(response.data);
+      setVideoFile(initialVideoFile);
+      setStartTime(initialStartTime);
+      setEndTime(initialEndTime);
+      setFileName(initialFileName);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    } catch (error) {
+      console.error(error.response.data.error);
+      setErrorMessage(error.response.data.error);
+    } finally {
+      setLoading(false);
       setShowDoneMessage(true);
       setTimeout(() => {
         setShowDoneMessage(false);
-        setVideoFile(initialVideoFile);
-        setStartTime(initialStartTime);
-        setEndTime(initialEndTime);
-        setFileName(initialFileName);
-        if (fileInputRef.current) {
-          fileInputRef.current.value = "";
-        }
-      }, 3000);
-    } catch (error) {
-      console.error(error.response.data);
-    } finally {
-      setLoading(false);
+      }, 5000);
     }
   };
 
@@ -87,7 +89,7 @@ export function Subclip() {
         <Button color="blue" type="submit" className="ml-1" disabled={loading}>
           {loading ? "Loading..." : "Create Subclip"}
         </Button>
-        {showDoneMessage && <div className="text-green-600 text-center">Done!</div>}
+        {showDoneMessage && <div className="text-green-600 text-center">{errorMessage ? errorMessage : "Done!"}</div>}
       </form>
     </div>
   );
