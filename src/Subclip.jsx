@@ -62,7 +62,20 @@ export function Subclip() {
 
   return (
     <div className="flex flex-wrap justify-center font-mono">
-      <h1 className="basis-full text-2xl mt-3 ml-1">Video Subclip</h1>
+      <h1 className="basis-full text-2xl mt-3 ml-1 font-semibold">Video Subclip</h1>
+      <h3 className="basis-full text-lg mt-3 ml-1">Requirements:</h3>
+      <ol className="basis-full text-base mt-3 ml-1 list-decimal list-inside">
+        <li>
+          A video file <span className="font-semibold text-gray-900 dark:text-white">must</span> be present.
+        </li>
+        <li>
+          Start and end times <span className="font-semibold text-gray-900 dark:text-white">must</span> be positive.
+        </li>
+        <li>
+          <span className="font-semibold text-gray-900 dark:text-white">Do not</span> enter an end time that is less
+          than the start time.
+        </li>
+      </ol>
       <form onSubmit={handleSubmit} className="basis-full space-y-5">
         <input ref={fileInputRef} className="ml-1" type="file" accept="video/*" onChange={handleFileChange} />
         <input
