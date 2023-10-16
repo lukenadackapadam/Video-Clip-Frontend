@@ -68,6 +68,7 @@ export function Subclip() {
         <input
           className="rounded-md border-2"
           type="number"
+          min="0"
           placeholder="Start Time (seconds)"
           value={startTime}
           onChange={(e) => setStartTime(e.target.value)}
@@ -75,6 +76,7 @@ export function Subclip() {
         <input
           className="rounded-md border-2 ml-1"
           type="number"
+          min="0"
           placeholder="End Time (seconds)"
           value={endTime}
           onChange={(e) => setEndTime(e.target.value)}
