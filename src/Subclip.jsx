@@ -4,8 +4,8 @@ import { Button } from "flowbite-react";
 
 export function Subclip() {
   const initialVideoFile = null;
-  const initialStartTime = 0;
-  const initialEndTime = 0;
+  const initialStartTime = null;
+  const initialEndTime = null;
   const initialFileName = "";
 
   const [videoFile, setVideoFile] = useState(initialVideoFile);
@@ -20,6 +20,20 @@ export function Subclip() {
 
   const handleFileChange = (e) => {
     setVideoFile(e.target.files[0]);
+  };
+
+  const handleStartTimeChange = (e) => {
+    const value = parseInt(e.target.value);
+    if (!isNaN(value) && value >= 0) {
+      setStartTime(value);
+    }
+  };
+
+  const handleEndTimeChange = (e) => {
+    const value = parseInt(e.target.value);
+    if (!isNaN(value) && value >= 0) {
+      setEndTime(value);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -84,7 +98,7 @@ export function Subclip() {
           min="0"
           placeholder="Start Time (seconds)"
           value={startTime}
-          onChange={(e) => setStartTime(e.target.value)}
+          onChange={handleStartTimeChange}
         />
         <input
           className="rounded-md border-2 ml-1"
@@ -92,7 +106,7 @@ export function Subclip() {
           min="0"
           placeholder="End Time (seconds)"
           value={endTime}
-          onChange={(e) => setEndTime(e.target.value)}
+          onChange={handleEndTimeChange}
         />
         <input
           className="rounded-md border-2 ml-1"
